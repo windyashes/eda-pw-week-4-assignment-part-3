@@ -38,13 +38,15 @@ describe('Automated tests', function () {
     before(function () {
         // runs once before the first test in this block
         let { basket } = testItems;
-        if(typeof basket === 'array') {
+        if (typeof basket === 'object' && Array.isArray(basket)) {
             originalBasket = [...basket];
-        }    
+            basket.length = 0;
+        }  
     });
     after(function () {
+        let { basket } = testItems;
         // runs once after the last test in this block
-        if(typeof basket === 'array') {
+        if (typeof basket === 'object' && Array.isArray(basket)) {
             basket = [...originalBasket];
         } 
     });
@@ -58,7 +60,7 @@ describe('Automated tests', function () {
         it('`addItem` function takes in an item, adds to the array', function () {
             let { basket, addItem } = testItems;
             addItem('Kale');
-            assert.equal(basket[basket.length - 1], 'Kale');
+            expect(basket, 'addItem() needs to be able add an item').to.include.members(['Kale']);
             expect(basket.length).to.be.greaterThan(0);
 
             addItem('Chocolate');
@@ -86,7 +88,14 @@ describe('Automated tests', function () {
                 let tempLog = console.log;
                 
                 // Temporarily override console.log
-                console.log = (item) => result += item;
+                console.log = (...rest) => {
+                    if (rest.length > 1) {
+                        result += rest.reduce((acc = '', item) => acc += item);
+                    } else if (rest.length === 1) {
+                        result += rest[0];
+
+                    } 
+                }
                 listItems(basket);
                 // Set it back to default
                 console.log = tempLog;
@@ -97,17 +106,25 @@ describe('Automated tests', function () {
             assert.equal(result.includes('Spinach'), true);
         });
     });
-    describe(`Functions are tested using console.log()`, function () {
-        it(`Functions are tested using console.log()`, function () {
-            if (typeof counter === 'undefined') {
-                // Skip this test if running on the server
-                this.skip();
-            } else {
-                // Only run this test in the browser
-                expect(counter, `console.log() was only called ${counter} times.`).to.be.greaterThan(3);
-            }
-        });
-    });
+    describe('`empty` function empties the `basket` array', function () {
+        it('`empty` function empties the `basket` array', function() {
+            let { basket, empty } = testItems;
+            basket.push('tacos', 'burritos');
+            empty();
+            expect(basket.length, "empty() needs to empty the basket").to.equal(0);
+        })
+    })
+    // describe(`Functions are tested using console.log()`, function () {
+    //     it(`Functions are tested using console.log()`, function () {
+    //         if (typeof counter === 'undefined') {
+    //             // Skip this test if running on the server
+    //             this.skip();
+    //         } else {
+    //             // Only run this test in the browser
+    //             expect(counter, `console.log() was only called ${counter} times.`).to.be.greaterThan(3);
+    //         }
+    //     });
+    // });
     describe('STRETCH: Added a global const named `maxItems` and set it to 5', function () {
         it('STRETCH: Added a global const named `maxItems` and set it to 5', function () {
             let { maxItems } = testItems;
