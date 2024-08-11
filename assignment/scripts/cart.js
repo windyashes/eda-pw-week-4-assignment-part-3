@@ -41,17 +41,23 @@ function empty(){
 }
 
 console.log(`Basket is curerently ${basket}`);
+listItems();
 console.log(`Adding pasta to basket: ${addItem('pasta')}`);
 console.log(`Adding pasta sauce to basket: ${addItem('pasta sauce')}`);
 console.log(`Basket is curerently ${basket}`);
+listItems();
 console.log(`Emptying basket... `);
 empty();
 console.log(`Basket is curerently ${basket}`);
-
-
-
-
-
+listItems();
+console.log(`Adding pasta to basket: ${addItem('pasta')}`);
+console.log(`Adding pasta sauce to basket: ${addItem('pasta sauce')}`);
+console.log(`Adding broccoli to basket: ${addItem('broccoli')}`);
+console.log(`Adding watermelon to basket: ${addItem('watermelon')}`);
+console.log(`Adding beef to basket: ${addItem('beef')}`);
+console.log(`Adding spices to basket: ${addItem('spices')}`);
+console.log(`Removed ${removeItem('broccoli')}`);
+console.log(`Adding spices to basket: ${addItem('spices')}`);
 
 
 
