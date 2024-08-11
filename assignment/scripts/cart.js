@@ -2,8 +2,51 @@ console.log('***** Cart Functions *****');
 // Make sure to test all functions here in the JS file!
 // We want to see how you are testing your code!!!
 
+let basket = [];
+const maxItems = 5;
 
+function isFull(){
+    if(basket.length < maxItems){
+        return false;
+    }
+    return true;
+}
+function addItem(item){
+    if(!isFull()){
+        basket.push(item);
+        return true;
+    }
+    return false;
+}
+function removeItem(item){
+    let i = basket.indexOf(item);
+    if(i < 0){
+        return null;
+    }
+    let item2 = basket[i];
+    basket.splice(i, 1);
+    return item2;
+}
+function listItems(){
+    for(let i = 0; i < basket.length; i++){
+        console.log(basket[i]);
+    }
+}
+function empty(){
+    let x = basket.length;
+    for(let i = 0; i < x; i++){
+        basket.shift();
+    }
+    console.log(basket);
+}
 
+console.log(`Basket is curerently ${basket}`);
+console.log(`Adding pasta to basket: ${addItem('pasta')}`);
+console.log(`Adding pasta sauce to basket: ${addItem('pasta sauce')}`);
+console.log(`Basket is curerently ${basket}`);
+console.log(`Emptying basket... `);
+empty();
+console.log(`Basket is curerently ${basket}`);
 
 
 
